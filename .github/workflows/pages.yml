@@ -1,0 +1,29 @@
+name: Deploy Static Site to GitHub Pages
+
+# Trigger deployment on pushes to `main` (or whichever branch you use for pages)
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read   # for actions/checkout
+      pages: write     # to publish
+      id-token: write  # for actions/configure-pages
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v3
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: .
+
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v1
